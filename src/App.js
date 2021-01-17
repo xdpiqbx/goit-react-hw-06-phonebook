@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import s from './App.module.scss';
 import ContactForm from './components/ContactForm/ContactForm ';
 import ContactList from './components/ContactList';
