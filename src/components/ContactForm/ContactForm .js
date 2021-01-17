@@ -2,16 +2,22 @@ import PropTypes from 'prop-types';
 
 import React, { useState } from 'react';
 
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+// import { connect } from 'react-redux';
 import actions from '../../redux/actions';
+import { getAllContacts } from '../../redux/selectors';
 
 import s from './ContactForm.module.scss';
 
 import { v4 as uuidv4 } from 'uuid';
 
-const ContactForm = ({ allContacts, addContactToStore }) => {
+// const ContactForm = ({ allContacts, addContactToStore }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const allContacts = useSelector(getAllContacts);
+  const dispatch = useDispatch();
 
   const getContact = newContact => {
     if (allContacts) {
@@ -22,7 +28,8 @@ const ContactForm = ({ allContacts, addContactToStore }) => {
       }
     }
     addToLocalStorage(newContact);
-    addContactToStore(newContact);
+    // addContactToStore(newContact);
+    dispatch(actions.addContact(newContact));
   };
 
   const addToLocalStorage = newContact => {
@@ -94,15 +101,16 @@ const ContactForm = ({ allContacts, addContactToStore }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  allContacts: state.contacts.items,
-});
+// const mapStateToProps = state => ({
+//   allContacts: state.contacts.items,
+// });
 
-const mapDispatchToProps = dispatch => ({
-  addContactToStore: contacts => dispatch(actions.addContact(contacts)),
-});
+// const mapDispatchToProps = dispatch => ({
+//   addContactToStore: contact => dispatch(actions.addContact(contact)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+export default ContactForm;
 
 ContactForm.propTypes = {
   getContact: PropTypes.func,
